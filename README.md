@@ -1,73 +1,73 @@
 # Webserv
 
-Serveur HTTP implémenté en C++98 : gestion multi-ports avec epoll, configuration type Nginx, support CGI (Python/PHP), upload de fichiers, et pages d'erreur personnalisées.
+HTTP server implemented in C++98: multi-port management with epoll, Nginx-style configuration, CGI support (Python/PHP), file upload, and custom error pages.
 
-## Prérequis
-- Compilateur C++ (g++/clang++)
+## Prerequisites
+- C++ compiler (g++/clang++)
 - Make
-- PHP et Python (pour les scripts CGI)
+- PHP and Python (for CGI scripts)
 
-## Démarrage rapide
-1) Compiler le projet
+## Quick Start
+1) Compile the project
 ```bash
 make
 ```
 
-2) Lancer le serveur (configuration par défaut)
+2) Start the server (default configuration)
 ```bash
 ./webserv
 ```
-Ou avec un fichier de configuration personnalisé :
+Or with a custom configuration file:
 ```bash
 ./webserv config.conf
 ```
 
-3) Accéder au serveur
+3) Access the server
 - URL: http://localhost:8080
-- URL alternative: http://localhost:8090
+- Alternative URL: http://localhost:8090
 
-## Commandes Make disponibles
-- `make` ou `make all`: Compiler le projet
-- `make clean`: Supprimer les fichiers objets
-- `make fclean`: Supprimer les fichiers objets et l'exécutable
-- `make re`: Recompiler complètement le projet
+## Available Make Commands
+- `make` or `make all`: Compile the project
+- `make clean`: Remove object files
+- `make fclean`: Remove object files and executable
+- `make re`: Fully recompile the project
 
-## Architecture et fonctionnalités
-Le serveur web implémente les fonctionnalités suivantes :
-- **Multi-serveurs virtuels** : plusieurs configurations de serveurs avec ports et server_name distincts
-- **Gestion des requêtes HTTP** : GET, POST, DELETE
-- **CGI** : exécution de scripts Python et PHP
-- **Upload de fichiers** : téléversement dans des répertoires configurables
-- **Directory listing** : liste des fichiers d'un répertoire
-- **Redirections** : redirections HTTP configurables
-- **Pages d'erreur personnalisées** : 400, 403, 404, 405, 413, 414, 415, 500, 504, 505
-- **Configuration avancée** : limite de taille des requêtes, méthodes autorisées par location
+## Architecture and Features
+The web server implements the following features:
+- **Virtual multi-servers**: multiple server configurations with distinct ports and server_name
+- **HTTP request handling**: GET, POST, DELETE
+- **CGI**: Python and PHP script execution
+- **File upload**: upload to configurable directories
+- **Directory listing**: list files in a directory
+- **Redirections**: configurable HTTP redirections
+- **Custom error pages**: 400, 403, 404, 405, 413, 414, 415, 500, 504, 505
+- **Advanced configuration**: request size limits, allowed methods per location
 
-## Structure de la configuration
-Le fichier de configuration (`default.conf`) permet de définir :
-- `server_name` : nom du serveur virtuel
-- `listen` : port(s) d'écoute
-- `root` : racine des fichiers statiques
-- `client_max_body_size` : taille maximale du corps de la requête
-- `error_page` : pages d'erreur personnalisées
-- `location` : routes avec configuration spécifique
-  - `root` : racine pour cette location
-  - `index` : fichiers index par défaut
-  - `allow_methods` : méthodes HTTP autorisées
-  - `directory_listing` : activation du listing de répertoire
-  - `upload_dir` : répertoire de destination pour les uploads
-  - `cgi_pass` : script CGI à exécuter
-  - `redirect` : URL de redirection
+## Configuration Structure
+The configuration file (`default.conf`) allows you to define:
+- `server_name`: virtual server name
+- `listen`: listening port(s)
+- `root`: static files root directory
+- `client_max_body_size`: maximum request body size
+- `error_page`: custom error pages
+- `location`: routes with specific configuration
+  - `root`: root directory for this location
+  - `index`: default index files
+  - `allow_methods`: allowed HTTP methods
+  - `directory_listing`: enable directory listing
+  - `upload_dir`: destination directory for uploads
+  - `cgi_pass`: CGI script to execute
+  - `redirect`: redirection URL
 
-## Points d'accès (configuration par défaut)
-- Page d'accueil : `http://localhost:8080/`
-- Upload de fichiers : `http://localhost:8080/root/cgi-bin/`
-- Liste des fichiers uploadés : `http://localhost:8080/root/cgi-bin/uploads/`
-- Redirection Google : `http://localhost:8080/google/` (redirige vers google.com)
-- Serveur secondaire : `http://127.0.0.2:9090/`
+## Entry Points (default configuration)
+- Home page: `http://localhost:8080/`
+- File upload: `http://localhost:8080/root/cgi-bin/`
+- Uploaded files list: `http://localhost:8080/root/cgi-bin/uploads/`
+- Google redirect: `http://localhost:8080/google/` (redirects to google.com)
+- Secondary server: `http://127.0.0.2:9090/`
 
-## Exemples de configuration
-### Serveur simple
+## Configuration Examples
+### Simple server
 ```
 server {
     server_name localhost;
@@ -81,7 +81,7 @@ server {
 }
 ```
 
-### Location avec CGI
+### Location with CGI
 ```
 location /cgi-bin/ {
     allow_methods GET POST;
@@ -89,7 +89,7 @@ location /cgi-bin/ {
 }
 ```
 
-### Location avec upload
+### Location with upload
 ```
 location /upload/ {
     allow_methods GET POST DELETE;
@@ -98,13 +98,13 @@ location /upload/ {
 }
 ```
 
-## Fichiers de test
-- `test.conf` : configuration de test alternative
-- `siege.conf` : configuration pour tests de charge avec Siege
+## Test Files
+- `test.conf`: alternative test configuration
+- `siege.conf`: configuration for load testing with Siege
 
-## Notes techniques
-- Standard C++98
-- Utilisation d'epoll pour la gestion des événements I/O
-- Architecture non-bloquante
-- Parsing de configuration inspiré de Nginx
-- Support complet des requêtes HTTP/1.1
+## Technical Notes
+- C++98 standard
+- epoll for I/O event management
+- Non-blocking architecture
+- Nginx-inspired configuration parsing
+- Full HTTP/1.1 request support

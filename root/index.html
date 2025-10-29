@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload and Manage Files</title>
+</head>
+<body>
+  <h1>Upload a File</h1>
+  <form action="/root/cgi-bin/upload.php" method="post" enctype="multipart/form-data">
+    <input type="file" name="file"><br>
+    <input type="submit" value="Upload">
+  </form>
+
+  <h2>Uploaded Files</h2>
+  <iframe src="/root/cgi-bin/list_files.php" style="width:100%; height:300px; border:none;"></iframe>
+</body>
+</html>
